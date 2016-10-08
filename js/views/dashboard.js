@@ -6,19 +6,20 @@ app.DashboardView = Backbone.View.extend({
     el : '#dashboard > .content',
 
     initialize: function() {
-        
+        AllCards.fetch({ ajaxSync: true });
+        this.render();
     },
 
     render: function() {
-        
-        var cardModel = new app.CardModel();
-        var cardView = new app.CardView({
-            model: cardModel
+        this.renderCardLists();
+        return this;
+    },
+
+    renderCardLists: function() {
+        var cardListView = new app.CardListView({
+            collection: AllCards
         });
 
-        this.$el.html(cardView.render().el);
-        return this;
+        this.$el.append(cardListView.render().el);
     }
 });
-
-var Dashboard = new app.DashboardView();

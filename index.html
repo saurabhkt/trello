@@ -16,39 +16,58 @@
 		<div class="card-header container-fluid">
 			<div class="row">
 				<div class="col-xs-8">
-					<textarea class="title" maxlength="28">Card A</textarea>
+					<textarea class="title" maxlength="28"><%- title %></textarea>
 				</div>
 				<div class="col-xs-4 text-right">
-					<span class="task-count">4 Tasks</span>
-					<span class="edit glyphicon glyphicon-pencil"></span>
+					<span class="task-count"><%- tasksCount %> Tasks</span>
+					<span class="edit glyphicon glyphicon-trash"></span>
 				</div>
 			</div>
 		</div>
 		<div class="card-content container-fluid">
 
 		</div>
+		<div class="card-footer container-fluid text-center">
+			<button class="btn btn-sm btn-default new-task">New Task</button>
+		</div>
     </script>
 
-    <script type="text/template">
-		<div class="row">
-			<div class="col-xs-12">
-				<p>Contents of card A</p>
-			</div>
+    <script type="text/template" id="taskTemplate">
+		<div class="task-header">
+			
 		</div>
+		<div class="task-content">
+			<a><%- text %></a>
+		</div>
+    </script>
+
+    <script type="text/template" id="cardListTemplate">
+    	<div class="card-list">
+    		<div class="card-list-header">
+    		
+    		</div>
+    		<div class="card-list-content">
+    			
+    		</div>
+    		<div class="card-list-footer container-fluid">
+	    		<button class="btn btn-success add-card">Add Card</button>
+    		</div>
+    	</div>
     </script>
 
 </head>
 <body>
 
-	<div id="dashboard">
+	<section id="dashboard">
 		<div class="content container-fluid">
 			
 		</div>
-	</div>
+	</section>
 
 	<script src="/vendor/js/jquery-2.2.4.min.js"></script>
 	<script src="/vendor/js/underscore.min.js"></script>
 	<script src="/vendor/js/backbone.min.js"></script>
+	<script src="/vendor/js/backbone.localStorage-min.js"></script>
 	<script src="/vendor/js/bootstrap-3.3.6.min.js"></script>
 
 	<script src="/js/models/user.js"></script>
@@ -56,7 +75,14 @@
 	<script src="/js/models/task.js"></script>
 	<script src="/js/models/card.js"></script>
 
+	<script src="/js/collections/users.js"></script>
+	<script src="/js/collections/comments.js"></script>
+	<script src="/js/collections/tasks.js"></script>
+	<script src="/js/collections/cards.js"></script>
+
+	<script src="/js/views/task.js"></script>
 	<script src="/js/views/card.js"></script>
+	<script src="/js/views/card-list.js"></script>
 	<script src="/js/views/dashboard.js"></script>
 
 	<script src="/js/app.js"></script>

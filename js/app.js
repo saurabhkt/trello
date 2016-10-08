@@ -4,13 +4,15 @@ var app = app || {};
 
 $(function() {
 
+	var Dashboard = new app.DashboardView();
+	
 	var Router = Backbone.Router.extend({
 	    routes: {
 	        ''								: 'dashboard'
 	    },
 
 	    dashboard: function() {
-	    	Dashboard.render();
+	    	// Dashboard.render();
 	    }
 	});
 

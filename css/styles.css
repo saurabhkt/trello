@@ -1,23 +1,60 @@
-.card {
+/* DASHBOARD */
+#dashboard textarea {
+	width: 100%;
+	border: none;
+	font-size: 14px;
+	border-radius: 3px;
+	outline:0px none transparent;
+}
+
+#dashboard a {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+/* DASHBOARD END */
+
+
+/* CARD LIST */
+
+.card-list {
 	max-width: 360px;
+	padding: 10px;
+}
+
+.card-list button.add-card {
+	width: 100%;
+}
+
+/* CARD LIST END */
+
+
+/* CARD */
+
+.card {
 	margin: 5px;
     padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
     border: 1px solid #f9f9f9;
     border-radius: 5px;
     background-color: #f9f9f9;
+    cursor: pointer;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(204,204,204,1);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(204,204,204,1);
+	box-shadow: 0px 0px 5px 0px rgba(204,204,204,1);
+}
+
+.card-header {
+	margin-bottom: 20px;
 }
 
 .card-header textarea {
-	width: 100%;
-	border: none;
-	resize: none;
 	height: 24px;
-	font-size: 14px;
-	border-radius: 3px;
 	padding: 3px;
 	margin: 0px -3px;
-	outline:0px none transparent;
 	background-color: #f9f9f9;
+	resize: none;
 }
 
 .card-header textarea:focus {
@@ -42,3 +79,68 @@
     border-radius: 3px;
     color: #333333;
 }
+
+.card-content {
+	margin-bottom: 10px;
+}
+
+.card-footer button.new-task {
+	width: 100%;
+}
+
+/* CARD END */
+
+
+/* TASK */
+
+.task {
+	cursor: pointer;
+	padding: 3px;
+	margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 3px;
+}
+
+.task-content textarea {
+	height: 32px;
+	padding: 3px;
+	margin: 0px;
+	background-color: #ffffff;
+	resize: none;
+}
+
+.task-content textarea:focus {
+	background-color: #ffffff;
+	resize: vertical;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

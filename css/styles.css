@@ -1,0 +1,44 @@
+.card {
+	max-width: 360px;
+	margin: 5px;
+    padding-top: 8px;
+    border: 1px solid #f9f9f9;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.card-header textarea {
+	width: 100%;
+	border: none;
+	resize: none;
+	height: 24px;
+	font-size: 14px;
+	border-radius: 3px;
+	padding: 3px;
+	margin: 0px -3px;
+	outline:0px none transparent;
+	background-color: #f9f9f9;
+}
+
+.card-header textarea:focus {
+	background-color: #ffffff;
+	border: none;
+}
+
+.card-header span {
+	padding: 3px;
+	margin-top: 3px;
+	font-size: 12px;
+}
+
+.card-header span.edit {
+	margin-left: 10px;
+	cursor: pointer;
+	color: #b7b7b7;
+}
+
+.card-header span.edit:hover {
+	background-color: #dddddd;
+    border-radius: 3px;
+    color: #333333;
+}

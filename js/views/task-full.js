@@ -7,6 +7,7 @@ app.TaskFullView = Backbone.View.extend({
     initialize: function(options) {
     	var that = this;
         this.callback = options.callback;
+        this.mode = options.mode;
     },
     
     template: _.template($('#taskFullTemplate').html()),
@@ -14,11 +15,14 @@ app.TaskFullView = Backbone.View.extend({
     events: {
         'click button.save-task'        : 'saveTask',
         'click button.cancel-task'      : 'cancelTask',
-        'keypress textarea.new-task'    : 'enterToSave'
+        'keypress textarea.task-text'    : 'enterToSave'
     },
 
     render: function() {
-        var data = { users: AllUsers.toJSON() };
+        var data = this.model.attributes;
+        data['users'] = AllUsers.toJSON();
+        data['mode'] = this.mode;
+
         this.$el.html(this.template(data));
 
         return this;
@@ -28,13 +32,13 @@ app.TaskFullView = Backbone.View.extend({
         if(e.keyCode == 13) {
             e.preventDefault();
             this.saveTask();
-        }
-            
+        }  
     },
 
     saveTask: function(e) {
         this.model.set({
-            text: this.$('textarea.new-task').val(),
+            id: app.Utils.guid(),
+            text: this.$('textarea.task-text').val(),
             assignedTo: this.$('select.assign-to').val()
         });
 
@@ -43,7 +47,7 @@ app.TaskFullView = Backbone.View.extend({
     },
 
     cancelTask: function() {
-        
+        this.close();
     },
 
     onClose: function() {

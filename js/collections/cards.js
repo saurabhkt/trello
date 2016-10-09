@@ -3,8 +3,7 @@
 var app = app || {};
 
 app.CardsCollection = Backbone.Collection.extend({
-	// localStorage	: new Backbone.LocalStorage("CardsCollection"),
-	url				: 'http://localhost:2403/cards',
+	localStorage	: new Backbone.LocalStorage("CardsCollection"),
     model			: app.CardModel
 });
 

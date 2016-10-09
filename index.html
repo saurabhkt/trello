@@ -35,6 +35,7 @@
     </script>
 
     <script type="text/template" id="taskTemplate">
+    	<input type="hidden" name="taskId" value="<%- id %>">
 		<div class="task-header">
 			<div class="col-xs-8 text-right">
 			</div>
@@ -81,15 +82,15 @@
 		    	<div class="modal-content">
 		      		<div class="modal-header">
 		        		<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-		        		<h4 class="modal-title">New Task</h4>
+		        		<h4 class="modal-title"><% if (mode == 'edit') { %> Edit <% } else { %> New <% } %> Task</h4>
 		      		</div>
 		      		<div class="modal-body">
-		        		<textarea class="new-task" placeholder="Type new task..." rows="2" maxlength="160"></textarea>
+		        		<textarea class="task-text" placeholder="Type new task..." rows="2" maxlength="160"><%- text %></textarea>
 		        		<hr>
 		        		<label>Assign to:</label>
 		        		<select class="assign-to">
 		        			<% for (index in users) { %>
-		        				<option value="<%- users[index].id %>"><%- users[index].name %></option>
+		        				<option value="<%- users[index].id %>" <% if(users[index].id == assignedTo) { %> selected <% } %> ><%- users[index].name %></option>
 		        			<% } %>
 		        		</select>
 		      		</div>
@@ -114,11 +115,26 @@
 		</section>
 	</section>
 
+
+	<script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+	<script>
+		var config = {
+	    	apiKey: "AIzaSyB1k_UNNDfXA8NuPUDEO8rc3Xy66OciHNo",
+	    	authDomain: "trello-d02d6.firebaseapp.com",
+	    	databaseURL: "https://trello-d02d6.firebaseio.com",
+	    	storageBucket: "",
+	    	messagingSenderId: "315020960018"
+	  	};
+	  	firebase.initializeApp(config);
+	</script>
+
 	<script src="/vendor/js/jquery-2.2.4.min.js"></script>
 	<script src="/vendor/js/underscore.min.js"></script>
 	<script src="/vendor/js/backbone.min.js"></script>
 	<script src="/vendor/js/backbone.localStorage-min.js"></script>
 	<script src="/vendor/js/bootstrap-3.3.6.min.js"></script>
+
+	<script src="/js/utils.js"></script>
 
 	<script src="/js/models/user.js"></script>
 	<script src="/js/models/comment.js"></script>
@@ -147,6 +163,24 @@
 			[{"id":"u1","name":"Azaan"},{"id":"u2","name":"KT"},{"id":"u3","name":"Som"}]
 		);
 		AllUsers.each(function(model, index) {
+			model.save();
+		});
+	</noscript>
+
+	<noscript>
+		var allCards = [{"id":"card1","title":"Card A","order":"2","createdBy":"KT","createdAt":"","tasks":[{"id":"t1","text":"Task 1","order":"3","createdBy":"KT","createdAt":"","updatedAt":"","edited":false,"assignedTo":"Azaan"},{"id":"t2","text":"Task 2","order":"1","createdBy":"Som","createdAt":"","updatedAt":"","edited":false,"assignedTo":"Som"}]},{"id":"card2","title":"Card B","order":"1","createdBy":"Som","createdAt":"","tasks":[{"id":"t3","text":"Task 3","order":"2","createdBy":"Azaan","createdAt":"","updatedAt":"","edited":false,"assignedTo":"KT"},{"id":"t4","text":"Task 4","order":"4","createdBy":"Azaan","createdAt":"","updatedAt":"","edited":false,"assignedTo":"KT"}]},{"id":"card3","title":"Card C","order":"3","createdBy":"Azaan","createdAt":"","tasks":[{"id":"t5","text":"Task 5","order":"6","createdBy":"Azaan","createdAt":"","updatedAt":"","edited":false,"assignedTo":"KT"},{"id":"t6","text":"Task 6","order":"5","createdBy":"Azaan","createdAt":"","updatedAt":"","edited":false,"assignedTo":"KT"}]}];
+
+		$.each(allCards, function(index, value) {
+			var model = new app.CardModel(value);
+			AllCards.add(model);
+			model.save();
+		});
+
+		var allUsers = [{"id":"user1","name":"Azaan"},{"id":"user2","name":"KT"},{"id":"user3","name":"Som"}];
+
+		$.each(allUsers, function(index, value) {
+			var model = new app.UserModel(value);
+			AllUsers.add(model);
 			model.save();
 		});
 	</noscript>

@@ -3,6 +3,7 @@
 var app = app || {};
 
 app.CardModel = Backbone.Model.extend({
+	localStorage	: new Backbone.LocalStorage("CardModel"),
     defaults    : {
     				id: "",
             		title: "",

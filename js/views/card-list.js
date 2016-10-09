@@ -13,6 +13,10 @@ app.CardListView = Backbone.View.extend({
 
     template: _.template($('#cardListTemplate').html()),
 
+    events: {
+        'click button.add-card' : 'addCard'
+    },
+
     render: function() {
         var that = this;
         this.$el.html(this.template());
@@ -33,5 +37,14 @@ app.CardListView = Backbone.View.extend({
         });
 
         this.$('.card-list-content').append(cardView.render().el);
+    },
+
+    addCard: function(e) {
+        e.preventDefault();
+        var model = new app.CardModel();
+        var cardView = new app.CardView({
+            model: model
+        });
+        this.collection.add(model);
     }
 });

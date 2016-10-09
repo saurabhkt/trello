@@ -12,13 +12,17 @@
 	text-decoration: none;
 }
 
+#dashboard select {
+	cursor: pointer;
+}
+
 /* DASHBOARD END */
 
 
 /* CARD LIST */
 
 .card-list {
-	max-width: 360px;
+	max-width: 400px;
 	padding: 10px;
 }
 
@@ -57,9 +61,14 @@
 	resize: none;
 }
 
+.card-header textarea:hover {
+	background-color: #ffffff;
+	cursor: pointer;
+}
+
 .card-header textarea:focus {
 	background-color: #ffffff;
-	border: none;
+	cursor: initial;
 }
 
 .card-header span {
@@ -68,25 +77,28 @@
 	font-size: 12px;
 }
 
-.card-header span.edit {
+.card-header span.delete-card {
 	margin-left: 10px;
 	cursor: pointer;
 	color: #b7b7b7;
 }
 
-.card-header span.edit:hover {
-	background-color: #dddddd;
-    border-radius: 3px;
+.card-header span.delete-card:hover {
+	/*background-color: #dddddd;
+    border-radius: 3px;*/
     color: #333333;
 }
 
-.card-content {
-	margin-bottom: 10px;
+.card-footer div.add-task {
+	background-color: #ffffff;
+	border-radius: 3px;
+	padding: 5px 0px;
 }
 
-.card-footer button.new-task {
-	width: 100%;
+.card-footer div.add-task:hover {
+	background-color: #E2E4E6;
 }
+
 
 /* CARD END */
 
@@ -95,10 +107,30 @@
 
 .task {
 	cursor: pointer;
-	padding: 3px;
+	padding: 5px 0px;
 	margin-bottom: 10px;
     background-color: #ffffff;
     border-radius: 3px;
+}
+
+.task:hover {
+	background-color: #E2E4E6;
+}
+
+.task-header span.delete-task {
+	font-size: 12px;
+	margin-top: 3px;
+	color: #ffffff;
+	cursor: pointer;
+	visibility: hidden;
+}
+
+.task:hover .task-header span.delete-task {
+	visibility: visible;
+}
+
+.task:hover .task-header span.delete-task:hover {
+	color: #333333;
 }
 
 .task-content textarea {
@@ -112,6 +144,10 @@
 .task-content textarea:focus {
 	background-color: #ffffff;
 	resize: vertical;
+}
+
+.task-footer span {
+	font-size: 12px;
 }
 
 

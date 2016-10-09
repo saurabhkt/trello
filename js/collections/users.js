@@ -6,3 +6,5 @@ app.UsersCollection = Backbone.Collection.extend({
 	localStorage	: new Backbone.LocalStorage("UsersCollection"),
     model			: app.UserModel
 });
+
+var AllUsers = new app.UsersCollection();

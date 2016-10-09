@@ -16,11 +16,11 @@
 		<div class="card-header container-fluid">
 			<div class="row">
 				<div class="col-xs-8">
-					<textarea class="title" maxlength="28"><%- title %></textarea>
+					<textarea class="card-title" maxlength="28" placeholder="Card title"><%- title %></textarea>
 				</div>
 				<div class="col-xs-4 text-right">
 					<span class="task-count"><%- tasksCount %> Tasks</span>
-					<span class="edit glyphicon glyphicon-trash"></span>
+					<span class="glyphicon glyphicon-trash delete-card"></span>
 				</div>
 			</div>
 		</div>
@@ -28,16 +28,36 @@
 
 		</div>
 		<div class="card-footer container-fluid text-center">
-			<button class="btn btn-sm btn-default new-task">New Task</button>
+			<div class="add-task">
+				<a class="add-task">Add Task</a>	
+			</div>
 		</div>
     </script>
 
     <script type="text/template" id="taskTemplate">
 		<div class="task-header">
-			
+			<div class="col-xs-8 text-right">
+			</div>
+			<div class="col-xs-4 text-right">
+				<span class="glyphicon glyphicon-trash delete-task"></span>
+			</div>
 		</div>
-		<div class="task-content">
-			<a><%- text %></a>
+		<div class="task-content container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<p><%- text %></p>
+				</div>
+			</div>
+		</div>
+		<div class="task-footer container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<span><%- assignedTo %></span>
+				</div>
+				<div class="col-xs-2 text-right">
+					<!-- <a><span class="glyphicon glyphicon-comment"></span></a> -->
+				</div>
+			</div>
 		</div>
     </script>
 
@@ -55,13 +75,43 @@
     	</div>
     </script>
 
+    <script type="text/template" id="taskFullTemplate">
+    	<div class="modal fade" tabindex="-1" role="dialog" id="taskModal">
+			<div class="modal-dialog" role="document">
+		    	<div class="modal-content">
+		      		<div class="modal-header">
+		        		<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+		        		<h4 class="modal-title">New Task</h4>
+		      		</div>
+		      		<div class="modal-body">
+		        		<textarea class="new-task" placeholder="Type new task..." rows="2" maxlength="160"></textarea>
+		        		<hr>
+		        		<label>Assign to:</label>
+		        		<select class="assign-to">
+		        			<% for (index in users) { %>
+		        				<option value="<%- users[index].id %>"><%- users[index].name %></option>
+		        			<% } %>
+		        		</select>
+		      		</div>
+		      		<div class="modal-footer">
+		        		<button type="button" class="btn btn-default cancel-task" data-dismiss="modal">Cancel</button>
+		        		<button type="button" class="btn btn-primary save-task">Save</button>
+		      		</div>
+		    	</div>
+		  	</div>
+		</div>
+    </script>
+
 </head>
 <body>
 
 	<section id="dashboard">
-		<div class="content container-fluid">
+		<div class="container-fluid content">
 			
 		</div>
+		<section id="modalWrapper">
+			
+		</section>
 	</section>
 
 	<script src="/vendor/js/jquery-2.2.4.min.js"></script>
@@ -80,9 +130,27 @@
 	<script src="/js/collections/tasks.js"></script>
 	<script src="/js/collections/cards.js"></script>
 
+	<script src="/js/views/task-full.js"></script>
 	<script src="/js/views/task.js"></script>
 	<script src="/js/views/card.js"></script>
 	<script src="/js/views/card-list.js"></script>
+
+	<noscript>
+		AllCards.reset(
+			[{"id":"c1","title":"Card A","order":"2","createdBy":"KT","createdAt":"","tasks":[{"id":"t1","text":"Task 1","order":"3","createdBy":"KT","createdAt":"","updatedAt":"","edited":false,"assignedTo":"Azaan"},{"id":"t2","text":"Task 2","order":"1","createdBy":"Som","createdAt":"","updatedAt":"","edited":false,"assignedTo":"Som"}]},{"id":"c2","title":"Card B","order":"1","createdBy":"Som","createdAt":"","tasks":[{"id":"t3","text":"Task 3","order":"2","createdBy":"Azaan","createdAt":"","updatedAt":"","edited":false,"assignedTo":"KT"},{"id":"t4","text":"Task 4","order":"4","createdBy":"Azaan","createdAt":"","updatedAt":"","edited":false,"assignedTo":"KT"}]},{"id":"c3","title":"Card C","order":"3","createdBy":"Azaan","createdAt":"","tasks":[{"id":"t5","text":"Task 5","order":"6","createdBy":"Azaan","createdAt":"","updatedAt":"","edited":false,"assignedTo":"KT"},{"id":"t6","text":"Task 6","order":"5","createdBy":"Azaan","createdAt":"","updatedAt":"","edited":false,"assignedTo":"KT"}]}]
+		);
+		AllCards.each(function(model, index) {
+			model.save();
+		});
+
+		AllUsers.reset(
+			[{"id":"u1","name":"Azaan"},{"id":"u2","name":"KT"},{"id":"u3","name":"Som"}]
+		);
+		AllUsers.each(function(model, index) {
+			model.save();
+		});
+	</noscript>
+
 	<script src="/js/views/dashboard.js"></script>
 
 	<script src="/js/app.js"></script>

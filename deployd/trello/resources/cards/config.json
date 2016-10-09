@@ -1,0 +1,45 @@
+{
+	"type": "Collection",
+	"properties": {
+		"title": {
+			"name": "title",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "title",
+			"order": 0
+		},
+		"order": {
+			"name": "order",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "order",
+			"order": 1
+		},
+		"createdBy": {
+			"name": "createdBy",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "createdBy",
+			"order": 2
+		},
+		"createdAt": {
+			"name": "createdAt",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "createdAt",
+			"order": 3
+		},
+		"tasks": {
+			"name": "tasks",
+			"type": "array",
+			"typeLabel": "array",
+			"required": false,
+			"id": "tasks",
+			"order": 4
+		}
+	}
+}

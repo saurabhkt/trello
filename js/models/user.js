@@ -3,9 +3,8 @@
 var app = app || {};
 
 app.UserModel = Backbone.Model.extend({
-    url         : '',
     defaults    : {
-            		name: "",
-            		username: ""
+            		id: "",
+            		name: ""
                   }
 });

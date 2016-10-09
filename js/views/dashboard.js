@@ -6,7 +6,8 @@ app.DashboardView = Backbone.View.extend({
     el : '#dashboard > .content',
 
     initialize: function() {
-        AllCards.fetch({ ajaxSync: true });
+        AllCards.fetch();
+        AllUsers.fetch();
         this.render();
     },
 

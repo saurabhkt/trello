@@ -3,7 +3,6 @@
 var app = app || {};
 
 app.CardModel = Backbone.Model.extend({
-    url         : '',
     defaults    : {
     				id: "",
             		title: "",

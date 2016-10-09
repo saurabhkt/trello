@@ -14,8 +14,18 @@ app.TaskView = Backbone.View.extend({
     
     template: _.template($('#taskTemplate').html()),
 
+    events: {
+        'click span.delete-task' : 'deleteTask'
+    },
+
     render: function() {
         this.$el.html(this.template(this.model.attributes));
         return this;
+    },
+
+    deleteTask: function(e) {
+        this.model.destroy();
+        this.undelegateEvents();
+        this.remove();
     }
 });

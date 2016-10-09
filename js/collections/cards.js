@@ -3,8 +3,8 @@
 var app = app || {};
 
 app.CardsCollection = Backbone.Collection.extend({
-	url				: 'https://api.myjson.com/bins/ntlu', // FOR TESTING
-	localStorage	: new Backbone.LocalStorage("CardsCollection"),
+	// localStorage	: new Backbone.LocalStorage("CardsCollection"),
+	url				: 'http://localhost:2403/cards',
     model			: app.CardModel
 });
 

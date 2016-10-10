@@ -5,16 +5,9 @@ var app = app || {};
 app.CardView = Backbone.View.extend({
 
     initialize: function() {
-
+        this.listenTo(this.model, 'change', this.render);
         this.collection = new app.TasksCollection(this.model.get('tasks'));
 
-        this.listenTo(this.collection, 'change', this.renderTasks);
-
-        this.listenTo(this.collection, 'add', this.renderTask);
-        this.listenTo(this.collection, 'reset', this.renderTasks);
-        this.listenTo(this.collection, 'remove', this.renderTasks);
-
-        // this.model.listenTo(this.collection, 'add', this.saveNewTask);
         this.model.listenTo(this.collection, 'update', this.updateModel);
     },
 
@@ -25,9 +18,8 @@ app.CardView = Backbone.View.extend({
     template: _.template($('#cardTemplate').html()),
 
     events: {
-        'click div.add-task' : 'newTask',
-        'click span.delete-card' : 'deleteCard',
-        'change textarea.card-title' : 'updateCardName'
+        'click span.delete-card'        : 'deleteCard',
+        'change textarea.card-title'    : 'updateCardName'
     },
 
     render: function() {
@@ -36,58 +28,34 @@ app.CardView = Backbone.View.extend({
         data['tasksCount'] = data.tasks.length;
         this.$el.html(this.template(data));
         
-        this.collection.each(function(task) {
-            that.renderTask(task);
-        }, this);
+        this.renderTaskList();
 
         return this;
     },
 
-    renderTask: function(task) {
-        var taskView = new app.TaskView({
-            model: task
+    renderTaskList: function() {
+        var taskListView = new app.TaskListView({
+            collection: this.collection,
+            model: this.model
         });
 
-        this.$('.card-content').append(taskView.render().el);
+        this.$('.card-content').append(taskListView.render().el);
     },
 
-    newTask: function(e) {
-        e.preventDefault();
-        var that = this;
-
-        var taskFullView = new app.TaskFullView({
-            model: new app.TaskModel(),
-            callback: function (model) {
-                        that.addTask(model);
-                        this.close();
-                    }
-        });
-        $('#modalWrapper').html(taskFullView.render().el);
-        $('#taskModal').modal({
-            backdrop: false
-        });
-        $('#taskModal').on('shown.bs.modal', function (e) {
-            $('#taskModal textarea.new-task').focus();
-        })
-    },
-
-    addTask: function(model) {
-        var taskView = new app.TaskView({
-            model: model
-        });
-        this.collection.add(model);
-    },
-
+    /*
+        The below function exits only because there is no backend logic to reflect
+        changes made by HTTP requests to the /tasks endpoint to the card's model
+    */
     updateModel: function(collection) {
         this.set({
-            tasks: collection.toJSON()
+            'tasks' : collection.toJSON()
         });
         this.save();
     },
 
     updateCardName: function(e) {
         this.model.set({
-            title: $(e.currentTarget).val()
+            title: this.$('textarea.card-title').val()
         });
         this.model.save();
     },

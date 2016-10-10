@@ -15,12 +15,33 @@ app.TaskView = Backbone.View.extend({
     template: _.template($('#taskTemplate').html()),
 
     events: {
-        'click span.delete-task' : 'deleteTask'
+        'click span.edit-task' : 'editTask',
+        'click span.delete-task' : 'deleteTask',
+        'click button.save-task' : 'saveTask'
     },
 
-    render: function() {
-        this.$el.html(this.template(this.model.attributes));
+    render: function(mode) {
+        var data = this.model.attributes;
+        data['users'] = AllUsers.toJSON();
+        
+        data['mode'] = mode || 'read';
+        this.$el.addClass(mode);
+
+        this.$el.html(this.template(data));
         return this;
+    },
+
+    editTask: function() {
+        this.render('edit');
+    },
+
+    saveTask: function() {
+        this.model.set({
+            text: this.$('textarea.task-text').val(),
+            assignedTo: this.$('select.assign-to').val()
+        });
+        this.collection.add(this.model);
+        this.model.save();
     },
 
     deleteTask: function(e) {

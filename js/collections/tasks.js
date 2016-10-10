@@ -3,7 +3,7 @@
 var app = app || {};
 
 app.TasksCollection = Backbone.Collection.extend({
-	localStorage	: new Backbone.LocalStorage("TasksCollection"),
+	url				: 'http://localhost:2403/tasks',
     model			: app.TaskModel
 });
 

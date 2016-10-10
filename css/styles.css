@@ -1,3 +1,9 @@
+.font12 {
+	font-size: 12px;
+}
+
+
+
 /* DASHBOARD */
 #dashboard textarea {
 	width: 100%;
@@ -103,6 +109,21 @@
 /* CARD END */
 
 
+/* TASK LIST */
+
+.task-list-footer div.add-task {
+	background-color: #ffffff;
+	border-radius: 3px;
+	padding: 5px 0px;
+}
+
+.task-list-footer div.add-task:hover {
+	background-color: #E2E4E6;
+}
+
+/* TASK LIST END */
+
+
 /* TASK */
 
 .task {
@@ -113,23 +134,24 @@
     border-radius: 3px;
 }
 
-.task:hover {
+.task:hover, .task.edit {
 	background-color: #E2E4E6;
 }
 
-.task-header span.delete-task {
+.task-header span {
 	font-size: 12px;
 	margin-top: 3px;
+	margin-left: 10px;
 	color: #ffffff;
 	cursor: pointer;
 	visibility: hidden;
 }
 
-.task:hover .task-header span.delete-task {
+.task:hover .task-header span {
 	visibility: visible;
 }
 
-.task:hover .task-header span.delete-task:hover {
+.task:hover .task-header span:hover {
 	color: #333333;
 }
 

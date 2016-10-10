@@ -42,9 +42,6 @@ app.CardListView = Backbone.View.extend({
     addCard: function(e) {
         e.preventDefault();
         var model = new app.CardModel();
-        var cardView = new app.CardView({
-            model: model
-        });
         this.collection.add(model);
     }
 });

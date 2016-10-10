@@ -6,44 +6,47 @@ app.TaskFullView = Backbone.View.extend({
 
     initialize: function(options) {
     	var that = this;
-        this.callback = options.callback;
+        this.model = options.model;
+        this.collection = options.collection;
     },
     
     template: _.template($('#taskFullTemplate').html()),
 
+    el: '#modalWrapper',
+
     events: {
-        'click button.save-task'        : 'saveTask',
-        'click button.cancel-task'      : 'cancelTask',
-        'keypress textarea.new-task'    : 'enterToSave'
+        'click button.save-task'    : 'saveTask',
+        'click button.cancel-task'  : 'cancelTask',
     },
 
     render: function() {
-        var data = { users: AllUsers.toJSON() };
+        var data = this.model.attributes;
+        data['users'] = AllUsers.toJSON();
+
         this.$el.html(this.template(data));
+        $('#taskModal').modal({
+            backdrop: false
+        });
+        $('#taskModal').on('shown.bs.modal', function (e) {
+            $('#taskModal textarea.new-task').focus();
+        })
 
         return this;
     },
 
-    enterToSave: function(e) {
-        if(e.keyCode == 13) {
-            e.preventDefault();
-            this.saveTask();
-        }
-            
-    },
-
     saveTask: function(e) {
+        e.preventDefault();
         this.model.set({
             text: this.$('textarea.new-task').val(),
             assignedTo: this.$('select.assign-to').val()
         });
-
-        if(this.callback)
-            this.callback(this.model);
+        this.collection.add(this.model);
+        this.model.save();
+        this.close();
     },
 
     cancelTask: function() {
-        
+        this.close();
     },
 
     onClose: function() {

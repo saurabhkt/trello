@@ -6,9 +6,13 @@ app.DashboardView = Backbone.View.extend({
     el : '#dashboard > .content',
 
     initialize: function() {
+        var that = this;
         AllCards.fetch();
-        AllUsers.fetch();
-        this.render();
+        AllUsers.fetch({
+            success: function() {
+                that.render();
+            }
+        });
     },
 
     render: function() {

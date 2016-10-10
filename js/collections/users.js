@@ -3,7 +3,7 @@
 var app = app || {};
 
 app.UsersCollection = Backbone.Collection.extend({
-	localStorage	: new Backbone.LocalStorage("UsersCollection"),
+	url				: 'http://localhost:2403/users',
     model			: app.UserModel
 });
 

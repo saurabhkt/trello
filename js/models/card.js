@@ -4,7 +4,6 @@ var app = app || {};
 
 app.CardModel = Backbone.Model.extend({
     defaults    : {
-    				id: "",
             		title: "",
                     order: "",
                     createdBy: "",

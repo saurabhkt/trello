@@ -28,6 +28,8 @@ app.CardListView = Backbone.View.extend({
             }, this);
         }
         
+        app.Utils.initSortable();
+
         return this;
     },
 
@@ -35,6 +37,8 @@ app.CardListView = Backbone.View.extend({
         var cardView = new app.CardView({
             model: card
         });
+
+        app.Utils.initSortable();
 
         this.$('.card-list-content').append(cardView.render().el);
     },

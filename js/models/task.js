@@ -11,5 +11,5 @@ app.TaskModel = Backbone.Model.extend({
                     updatedAt: "",
                     edited: false,
                     assignedTo: ""
-                  }
+    }
 });

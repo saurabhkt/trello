@@ -19,13 +19,15 @@ app.CardView = Backbone.View.extend({
 
     events: {
         'click span.delete-card'        : 'deleteCard',
-        'change textarea.card-title'    : 'updateCardName'
+        'change textarea.card-title'    : 'updateCardName',
+        'keypress textarea.card-title'  : 'enterToSave'
     },
 
     render: function() {
         var that = this;
         var data = this.model.attributes;
         data['tasksCount'] = data.tasks.length;
+
         this.$el.html(this.template(data));
         
         this.renderTaskList();
@@ -40,11 +42,12 @@ app.CardView = Backbone.View.extend({
         });
 
         this.$('.card-content').append(taskListView.render().el);
+        app.Utils.initSortable();
     },
 
     /*
-        The below function exits only because there is no backend logic to reflect
-        changes made by HTTP requests to the /tasks endpoint to the card's model
+        The below function exits only because there is no real backend to map data of
+        cards collection and tasks collections when HTTP requests are made to their respective endpoints (i.e.: /cards and /tasks)
     */
     updateModel: function(collection) {
         this.set({
@@ -53,11 +56,19 @@ app.CardView = Backbone.View.extend({
         this.save();
     },
 
+    enterToSave: function(e) {
+        if(e.keyCode == 13) {
+            e.preventDefault();
+            this.updateCardName();
+        }
+    },
+
     updateCardName: function(e) {
         this.model.set({
             title: this.$('textarea.card-title').val()
         });
         this.model.save();
+        this.$('textarea.card-title').blur();
     },
 
     deleteCard: function(e) {

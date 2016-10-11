@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="/css/styles.css">
 
     <script type="text/template" id="cardTemplate">
+    	<input type="hidden" name="cardId" value="<% if (typeof id != 'undefined') { %><%- id %><% }%>">
 		<div class="card-header container-fluid">
 			<div class="row">
 				<div class="col-xs-8">
@@ -35,12 +36,14 @@
     </script>
 
     <script type="text/template" id="taskTemplate">
+    	<input type="hidden" name="taskId" value="<% if (typeof id != 'undefined') { %><%- id %><% }%>">
 		<div class="task-header">
 			<div class="col-xs-12 text-right">
 				<% if (mode == 'read') { %>
 					<span class="glyphicon glyphicon-pencil edit-task"></span>
 				<% } else { %>
 					<span class="glyphicon glyphicon-trash delete-task"></span>
+					<span class="cancel-edit-task">Cancel</span>
 				<% } %>
 			</div>
 		</div>
@@ -62,16 +65,20 @@
 						<label class="font12">Assign to:</label>
 		        		<select class="assign-to">
 		        			<% for (index in users) { %>
-		        				<option value="<%- users[index].id %>"><%- users[index].name %></option>
+		        				<option value="<%- users[index].id %>" <% if (users[index].id == assignedTo) { %>selected<% } %>><%- users[index].name %></option>
 		        			<% } %>
 		        		</select>
 		        	<% } else { %>
-		        		<span><%- assignedTo %></span>
+		        		<% for (index in users) { %>
+		        			<% if (users[index].id == assignedTo) { %>
+		        				<span><%- users[index].name %></span>
+		        			<% } %>
+		        		<% } %>
 		        	<% } %>
 				</div>
 				<div class="col-xs-6 text-right">
 					<% if (mode == 'edit') { %>
-						<button class="btn btn-success save-task">Save</button>
+						<button class="btn btn-sm btn-success save-task">Save</button>
 					<% } else { %>
 		        		<a><span class="glyphicon glyphicon-comment"></span></a>
 		        	<% } %>
@@ -107,34 +114,6 @@
     	</div>
     </script>
 
-   <!--  <script type="text/template" id="taskFullTemplate">
-    	<div class="modal fade" tabindex="-1" role="dialog" id="taskModal">
-			<div class="modal-dialog" role="document">
-		    	<div class="modal-content">
-		      		<div class="modal-header">
-		        		<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-		        		<h4 class="modal-title">New Task</h4>
-		      		</div>
-		      		<div class="modal-body">
-		        		<textarea class="new-task" placeholder="Type new task..." rows="2" maxlength="160"><%- text %></textarea>
-
-		        		<hr>
-		        		<label>Assign to:</label>
-		        		<select class="assign-to">
-		        			<% for (index in users) { %>
-		        				<option value="<%- users[index].id %>"><%- users[index].name %></option>
-		        			<% } %>
-		        		</select>
-		      		</div>
-		      		<div class="modal-footer">
-		        		<button type="button" class="btn btn-default cancel-task" data-dismiss="modal">Cancel</button>
-		        		<button type="button" class="btn btn-primary save-task">Save</button>
-		      		</div>
-		    	</div>
-		  	</div>
-		</div>
-    </script> -->
-
 </head>
 <body>
 
@@ -148,9 +127,9 @@
 	</section>
 
 	<script src="/vendor/js/jquery-2.2.4.min.js"></script>
+	<script src="/vendor/js/jquery-ui-1.12.1.min.js"></script>
 	<script src="/vendor/js/underscore.min.js"></script>
 	<script src="/vendor/js/backbone.min.js"></script>
-	<script src="/vendor/js/backbone.localStorage-min.js"></script>
 	<script src="/vendor/js/bootstrap-3.3.6.min.js"></script>
 
 	<script src="/js/utils.js"></script>
@@ -165,7 +144,6 @@
 	<script src="/js/collections/tasks.js"></script>
 	<script src="/js/collections/cards.js"></script>
 
-	<!-- <script src="/js/views/task-full.js"></script> -->
 	<script src="/js/views/task.js"></script>
 	<script src="/js/views/card.js"></script>
 	<script src="/js/views/task-list.js"></script>

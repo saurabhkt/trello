@@ -27,7 +27,9 @@ app.TaskListView = Backbone.View.extend({
                 that.renderTask(task);
             }, this);
         }
-        
+
+        app.Utils.initSortable();
+
         return this;
     },
 
@@ -38,6 +40,8 @@ app.TaskListView = Backbone.View.extend({
         });
         var param = mode || 'read';
         this.$('.task-list-content').append(taskView.render(mode).el);
+
+        app.Utils.initSortable();
     },
 
     addTask: function(e) {

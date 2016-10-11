@@ -26,5 +26,6 @@ app.DashboardView = Backbone.View.extend({
         });
 
         this.$el.append(cardListView.render().el);
+        app.Utils.initSortable();
     }
 });

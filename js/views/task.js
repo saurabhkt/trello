@@ -16,6 +16,7 @@ app.TaskView = Backbone.View.extend({
 
     events: {
         'click span.edit-task' : 'editTask',
+        'click span.cancel-edit-task' : 'cancelEditTask',
         'click span.delete-task' : 'deleteTask',
         'click button.save-task' : 'saveTask'
     },
@@ -23,11 +24,14 @@ app.TaskView = Backbone.View.extend({
     render: function(mode) {
         var data = this.model.attributes;
         data['users'] = AllUsers.toJSON();
-        
+
         data['mode'] = mode || 'read';
-        this.$el.addClass(mode);
+        this.$el.removeClass('edit read').addClass(mode);
 
         this.$el.html(this.template(data));
+
+        app.Utils.initSortable();
+
         return this;
     },
 
@@ -35,8 +39,16 @@ app.TaskView = Backbone.View.extend({
         this.render('edit');
     },
 
+    cancelEditTask: function() {
+        // if(this.model.isNew())
+        //     this.deleteTask();
+        // else
+            this.render();
+    },
+
     saveTask: function() {
         this.model.set({
+            id: app.Utils.guid(),
             text: this.$('textarea.task-text').val(),
             assignedTo: this.$('select.assign-to').val()
         });

@@ -1,3 +1,45 @@
 {
-	"type": "Collection"
+	"type": "Collection",
+	"properties": {
+		"text": {
+			"name": "text",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "text",
+			"order": 0
+		},
+		"order": {
+			"name": "order",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "order",
+			"order": 1
+		},
+		"createdBy": {
+			"name": "createdBy",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "createdBy",
+			"order": 2
+		},
+		"assignedTo": {
+			"name": "assignedTo",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "assignedTo",
+			"order": 3
+		},
+		"cardId": {
+			"name": "cardId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "cardId",
+			"order": 4
+		}
+	}
 }

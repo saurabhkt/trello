@@ -48,7 +48,6 @@ app.TaskView = Backbone.View.extend({
 
     saveTask: function() {
         this.model.set({
-            id: app.Utils.guid(),
             text: this.$('textarea.task-text').val(),
             assignedTo: this.$('select.assign-to').val()
         });

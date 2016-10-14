@@ -4,11 +4,7 @@ var app = app || {};
 
 app.CardListView = Backbone.View.extend({
     initialize: function() {
-        this.listenTo(this.collection, 'change', this.render);
-
         this.listenTo(this.collection, 'add', this.renderCard);
-        this.listenTo(this.collection, 'reset', this.render);
-        this.listenTo(this.collection, 'remove', this.render);
     },
 
     template: _.template($('#cardListTemplate').html()),
@@ -21,24 +17,21 @@ app.CardListView = Backbone.View.extend({
         var that = this;
         this.$el.html(this.template());
 
-        this.$('.card-list-content').html('');
-        this.collection.each(function(card) {
-            that.renderCard(card);
+        this.collection.each(function(model) {
+            that.renderCard(model);
         }, this);
-        
-        app.Utils.initSortable();
 
         return this;
     },
 
-    renderCard: function(card) {
+    renderCard: function(model) {
         var cardView = new app.CardView({
-            model: card
+            model: model
         });
 
-        app.Utils.initSortable();
-
         this.$('.card-list-content').append(cardView.render().el);
+
+        app.Utils.initSortable();
     },
 
     addCard: function(e) {

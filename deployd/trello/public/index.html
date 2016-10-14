@@ -1,12 +1,148 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-  <script type="text/javascript" src="dpd.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+	<meta name="author" content="saurabhkt">
+	
+	<title>Trello</title>
+
+	<link rel="stylesheet" href="/vendor/css/bootstrap-3.3.6.min.css">
+	<link rel="stylesheet" href="/css/styles.css">
+
+	<script type="text/template" id="cardListTemplate">
+    	<div class="card-list">
+    		<div class="card-list-header">
+    		
+    		</div>
+    		<div class="card-list-content">
+    			
+    		</div>
+    		<div class="card-list-footer container-fluid">
+	    		<button class="btn btn-success add-card">Add Card</button>
+    		</div>
+    	</div>
+    </script>
+
+    <script type="text/template" id="cardTemplate">
+    	<input type="hidden" name="cardId" value="<% if (typeof id != 'undefined') { %><%- id %><% }%>">
+		<div class="card-header container-fluid">
+			<div class="row">
+				<div class="col-xs-8">
+					<textarea class="card-title" maxlength="28" placeholder="Card title"><%- title %></textarea>
+				</div>
+				<div class="col-xs-4 text-right">
+					<span class="task-count"><%- tasksCount %> Tasks</span>
+					<span class="glyphicon glyphicon-trash delete-card"></span>
+				</div>
+			</div>
+		</div>
+		<div class="card-content container-fluid">
+
+		</div>
+    </script>
+
+    <script type="text/template" id="taskListTemplate">
+    	<div class="task-list">
+    		<div class="task-list-content">
+    			
+    		</div>
+    		<div class="task-list-footer text-center">
+	    		<div class="add-task">
+					<a class="add-task">Add Task</a>	
+				</div>
+    		</div>
+    	</div>
+    </script>
+
+    <script type="text/template" id="taskTemplate">
+    	<input type="hidden" name="taskId" value="<% if (typeof id != 'undefined') { %><%- id %><% }%>">
+		<div class="task-header">
+			<div class="col-xs-12 text-right">
+				<% if (mode == 'read') { %>
+					<span class="glyphicon glyphicon-pencil edit-task"></span>
+				<% } else { %>
+					<span class="glyphicon glyphicon-trash delete-task"></span>
+					<span class="cancel-edit-task">Cancel</span>
+				<% } %>
+			</div>
+		</div>
+		<div class="task-content container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<% if (mode == 'edit') { %>
+						<textarea class="task-text" placeholder="Task text" autofocus><%- text %></textarea>
+					<% } else { %>
+		        		<p><%- text %></p>
+		        	<% } %>
+				</div>
+			</div>
+		</div>
+		<div class="task-footer container-fluid">
+			<div class="row">
+				<div class="col-xs-6">
+					<% if (mode == 'edit') { %>
+						<label class="font12">Assign to:</label>
+		        		<select class="assign-to">
+		        			<% for (index in users) { %>
+		        				<option value="<%- users[index].id %>" <% if (users[index].id == assignedTo) { %>selected<% } %>><%- users[index].name %></option>
+		        			<% } %>
+		        		</select>
+		        	<% } else { %>
+		        		<% for (index in users) { %>
+		        			<% if (users[index].id == assignedTo) { %>
+		        				<span><%- users[index].name %></span>
+		        			<% } %>
+		        		<% } %>
+		        	<% } %>
+				</div>
+				<div class="col-xs-6 text-right">
+					<% if (mode == 'edit') { %>
+						<button class="btn btn-sm btn-success save-task">Save</button>
+					<% } else { %>
+		        		<a><span class="glyphicon glyphicon-comment"></span></a>
+		        	<% } %>
+				</div>
+			</div>
+		</div>
+    </script>
 </head>
 <body>
-  <h1>Welcome to Deployd!</h1>
-  <p>You've just created a Deployd app. You can add front-end files in the <code>public</code> folder.</p>
-  <p>If you're new to Deployd, have a look at the <a href="http://docs.deployd.com/docs/getting-started/what-is-deployd.html">Getting Started Guide</a> or <a href="http://docs.deployd.com/docs/getting-started/your-first-api.html">Hello World Tutorial</a>.</p>
+
+	<section id="dashboard">
+		<div class="container-fluid content">
+			
+		</div>
+	</section>
+
+	<script src="/vendor/js/jquery-2.2.4.min.js"></script>
+	<script src="/vendor/js/jquery-ui-1.12.1.min.js"></script>
+	<script src="/vendor/js/underscore.min.js"></script>
+	<script src="/vendor/js/backbone.min.js"></script>
+	<script src="/vendor/js/bootstrap-3.3.6.min.js"></script>
+
+	<script src="/js/utils.js"></script>
+
+	<script src="/js/models/user.js"></script>
+	<script src="/js/models/comment.js"></script>
+	<script src="/js/models/task.js"></script>
+	<script src="/js/models/card.js"></script>
+
+	<script src="/js/collections/users.js"></script>
+	<script src="/js/collections/comments.js"></script>
+	<script src="/js/collections/tasks.js"></script>
+	<script src="/js/collections/cards.js"></script>
+
+	<script src="/js/views/task.js"></script>
+	<script src="/js/views/card.js"></script>
+	<script src="/js/views/task-list.js"></script>
+	<script src="/js/views/card-list.js"></script>
+
+	<script src="/js/views/dashboard.js"></script>
+
+	<script src="/js/app.js"></script>
+
 </body>
 </html>

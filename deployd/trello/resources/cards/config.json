@@ -11,8 +11,8 @@
 		},
 		"order": {
 			"name": "order",
-			"type": "string",
-			"typeLabel": "string",
+			"type": "number",
+			"typeLabel": "number",
 			"required": false,
 			"id": "order",
 			"order": 1
@@ -25,21 +25,13 @@
 			"id": "createdBy",
 			"order": 2
 		},
-		"createdAt": {
-			"name": "createdAt",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "createdAt",
-			"order": 3
-		},
 		"tasks": {
 			"name": "tasks",
 			"type": "array",
 			"typeLabel": "array",
 			"required": false,
 			"id": "tasks",
-			"order": 4
+			"order": 3
 		}
 	}
 }

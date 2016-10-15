@@ -11,7 +11,8 @@ $(function() {
             		connectWith: '.task-list-content',
             		update: function(event, ui) {
                 		console.log('taskid:'+$(ui.item).find('input[name="taskId"]').val());
-                		ui.item.trigger('dropped', ui.item.index());
+                		if($(ui.item).find('input[name="taskId"]').val().length > 0)
+                			ui.item.trigger('dropped', ui.item.index());
             		}
         		});
 			});
@@ -20,6 +21,8 @@ $(function() {
             		connectWith: '.card-list-content',
             		update: function(event, ui) {
                 		console.log('cardid:'+$(ui.item).find('input[name="cardId"]').val());
+                		if($(ui.item).find('input[name="cardId"]').val().length > 0)
+                			ui.item.trigger('dropped', ui.item.index());
             		}
         		});
 			});

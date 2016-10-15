@@ -5,7 +5,7 @@ var app = app || {};
 app.TaskModel = Backbone.Model.extend({
     defaults    : {
             		text: "",
-                    order: "",
+                    order: null,
                     assignedTo: "",
                     cardId: ""
     }

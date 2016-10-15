@@ -12,7 +12,6 @@ app.TaskListView = Backbone.View.extend({
             var model =  AllTasks.get(value);
             that.collection.add(model);
         });
-        // this.collection.sort();
     },
 
     template: _.template($('#taskListTemplate').html()),

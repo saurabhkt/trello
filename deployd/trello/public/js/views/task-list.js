@@ -18,12 +18,13 @@ app.TaskListView = Backbone.View.extend({
 
     events: {
         'click div.add-task'    : 'addTask',
-        'update-sort' : 'updateSort'
+        'update-sort' : 'updateSort',
+        'task-dropped' : 'taskDropped'
     },
 
     render: function() {
         var that = this;
-        this.$el.html(this.template());
+        this.$el.html(this.template(this.model.toJSON()));
 
         this.collection.each(function(model) {
             that.renderTask(model);
@@ -48,14 +49,29 @@ app.TaskListView = Backbone.View.extend({
         model.save();
     },
 
+    taskDropped: function(event, model, ui) {
+        this.collection.add(model);
+        model.set({
+            cardId: this.model.get('id')
+        });
+        this.updateSort(null, model, ui.item.index());
+
+        var taskIds = _.clone(this.model.get('tasks'));
+        taskIds.push(model.get('id'));
+        this.model.set({
+            tasks: taskIds
+        });
+    },
+
     renderTask: function(model, mode) {
         var taskView = new app.TaskView({
             model: model,
-            collection: AllTasks,
+            collection: this.collection,
             cardModel: this.model
         });
         var param = mode || 'read';
         this.$('.task-list-content').append(taskView.render(mode).el);
+        taskView.$('.task-text').focus();
     },
 
     addTask: function(e) {

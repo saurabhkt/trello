@@ -19,8 +19,7 @@ app.CardView = Backbone.View.extend({
     events: {
         'click span.delete-card'        : 'deleteCard',
         'change textarea.card-title'    : 'updateCardName',
-        'keypress textarea.card-title'  : 'enterToSave',
-        'dropped' : 'sort'
+        'keypress textarea.card-title'  : 'enterToSave'
     },
 
     render: function() {
@@ -32,10 +31,6 @@ app.CardView = Backbone.View.extend({
         this.renderTaskList();
 
         return this;
-    },
-
-    sort: function(event, index) {
-        this.$el.trigger('update-sort', [this.model, index]);
     },
 
     renderTaskList: function() {
@@ -62,17 +57,16 @@ app.CardView = Backbone.View.extend({
     updateCardName: function(e) {
         var that = this;
         this.model.set({
-            title: this.$('textarea.card-title').val(),
-            order: this.model.get('order') || this.collection.length + 1
+            title: this.$('textarea.card-title').val()
         });
         this.model.save(null, {
             success: function(response) {
                 that.model.set({
                     id: response.id
                 });
+                that.render();
             }
         });
-        this.$('textarea.card-title').blur();
     },
 
     deleteCard: function(e) {

@@ -46,7 +46,7 @@
 
     <script type="text/template" id="taskListTemplate">
     	<div class="task-list">
-    		<div class="task-list-content">
+    		<div class="task-list-content" data-cardId="<% if (typeof id != 'undefined') { %><%- id %><% }%>">
     			
     		</div>
     		<div class="task-list-footer text-center">
@@ -73,7 +73,7 @@
 			<div class="row">
 				<div class="col-xs-12">
 					<% if (mode == 'edit') { %>
-						<textarea class="task-text" placeholder="Task text" autofocus><%- text %></textarea>
+						<textarea class="task-text" placeholder="Task text"><%- text %></textarea>
 					<% } else { %>
 		        		<p><%- text %></p>
 		        	<% } %>

@@ -10,8 +10,7 @@ app.CardListView = Backbone.View.extend({
     template: _.template($('#cardListTemplate').html()),
 
     events: {
-        'click button.add-card' : 'addCard',
-        'update-sort' : 'updateSort'
+        'click button.add-card' : 'addCard'
     },
 
     render: function() {
@@ -25,26 +24,9 @@ app.CardListView = Backbone.View.extend({
         return this;
     },
 
-    updateSort: function(event, model, position) {
-        this.collection.remove(model);
-
-        this.collection.each(function (model, index) {
-            var order = index;
-            if (index >= position)
-                order += 1;
-            model.set('order', order);
-            model.save();
-        });            
-        
-        model.set('order', position);
-        this.collection.add(model, {at: position});
-        model.save();
-    },
-
     renderCard: function(model) {
         var cardView = new app.CardView({
-            model: model,
-            collection: this.collection
+            model: model
         });
 
         this.$('.card-list-content').append(cardView.render().el);

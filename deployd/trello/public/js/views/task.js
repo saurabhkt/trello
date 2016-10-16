@@ -6,7 +6,6 @@ app.TaskView = Backbone.View.extend({
 
     initialize: function(options) {
         this.cardModel = options.cardModel;
-        this.listenTo(this.cardModel, 'change', this.updateTaskCount);
     },
 
     tagName: 'div',
@@ -20,7 +19,11 @@ app.TaskView = Backbone.View.extend({
         'click span.cancel-edit-task' : 'cancelEditTask',
         'click span.delete-task' : 'deleteTask',
         'click button.save-task' : 'saveTask',
-        'dropped' : 'sort'
+        'keypress textarea.task-text'  : 'enterToSave',
+        'keypress select.assign-to'  : 'enterToSave',
+        'sort' : 'sort',
+        'removed' : 'removed',
+        'received' : 'received'
     },
 
     render: function(mode) {
@@ -31,12 +34,31 @@ app.TaskView = Backbone.View.extend({
         this.$el.removeClass('edit read').addClass(mode);
 
         this.$el.html(this.template(data));
-
         return this;
     },
 
-    sort: function(event, index) {
-        this.$el.trigger('update-sort', [this.model, index]);
+    sort: function(event, ui) {
+        this.$el.trigger('update-sort', [this.model, ui.item.index()]);
+    },
+
+    removed: function(event, ui) {
+        this.collection.remove(this.model);
+
+        var taskIds = _.clone(this.cardModel.get('tasks'));
+        this.cardModel.set({
+            tasks: this.removeFromArray(taskIds, this.model.get('id'))
+        });
+    },
+
+    removeFromArray: function(arr, key) {
+        return $.grep(arr, function(value) {
+            return value != key;
+        });
+    },
+
+    received: function(event, ui) {
+        var targetTaskList = $(ui.item).closest('.task-list');
+        $(targetTaskList).trigger('task-dropped', [this.model, ui]);
     },
 
     editTask: function() {
@@ -50,17 +72,24 @@ app.TaskView = Backbone.View.extend({
             this.render();
     },
 
+    enterToSave: function(e) {
+        if(e.keyCode == 13) {
+            e.preventDefault();
+            this.saveTask();
+        }
+    },
+
     saveTask: function() {
         var that = this;
         this.model.set({
             text: this.$('textarea.task-text').val(),
             assignedTo: this.$('select option:selected').val(),
             cardId: this.$el.closest('.card').find('input[name="cardId"]').val(),
-            order: this.model.get('order') || this.cardModel.get('tasks').length + 1
+            order: this.model.get('order') || this.cardModel.get('tasks').length
         });
         if(this.model.isNew()) {
 
-            this.collection.add(this.model);
+            AllTasks.add(this.model);
             this.model.save(null, {
                 success: function(response) {
                     that.render();
@@ -80,18 +109,9 @@ app.TaskView = Backbone.View.extend({
     },
 
     deleteTask: function(e) {
-        var taskIds = this.cardModel.get('tasks');
-        this.cardModel.set({
-            tasks: this.removeFromArray(taskIds, this.model.get('id'))
-        });
-        this.model.destroy();
+        this.removed();
         this.undelegateEvents();
         this.remove();
-    },
-
-    removeFromArray: function(arr, key) {
-        return $.grep(arr, function(value) {
-            return value != key;
-        });
+        this.model.destroy();
     }
 });
